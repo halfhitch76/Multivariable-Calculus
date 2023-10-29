@@ -1,0 +1,76 @@
+#This program will calculate vector addition, subtraction, dot product, and 
+#projection of one vector onto another
+
+def main():
+    user_input = user_choice()
+
+    if user_input == 1:
+        vector_addition()
+    
+    elif user_input == 2:
+        vector_subtraction()
+
+    elif user_input == 3:
+        dot_product()
+
+    elif user_input == 4:
+        projection()
+
+
+def user_choice():
+    user_input = int(input('Would you like to 1) Vector addition, 2) Vector subtraction, 3) Vector dot product, or 4) Vector projection? '))
+
+    return user_input
+    
+def vector_addition():
+
+    x1 = float(input('Enter the x-coordinate of the first vector: '))
+    y1 = float(input('Enter the y-coordinate of the first vector: '))
+    x2 = float(input('Enter the x-coordinate of the second vector: '))
+    y2 = float(input('Enter the y-coordinate of the second vector: '))
+
+    result = (x1 + x2, y1 + y2)
+    print(f'The result of vector addition is ({result[0]}, {result[1]})')
+    
+
+def vector_subtraction():
+    x1 = float(input('Enter the x-coordinate of the first vector: '))
+    y1 = float(input('Enter the y-coordinate of the first vector: '))
+    x2 = float(input('Enter the x-coordinate of the second vector: '))
+    y2 = float(input('Enter the y-coordinate of the second vector: '))
+
+    result = (x1 - x2, y1 - y2)
+    print(f'The result of vector addition is ({result[0]}, {result[1]})')
+
+def dot_product():
+    #Get the input of both vectors
+    x1 = float(input('Enter the x-coordinate of the first vector: '))
+    y1 = float(input('Enter the y-coordinate of the first vector: '))
+    x2 = float(input('Enter the x-coordinate of the second vector: '))
+    y2 = float(input('Enter the y-coordinate of the second vector: '))
+
+    result = x1 * x2 + y1 * y2
+    print(f'The dot product of the two vectors is {result}')
+
+def projection():
+    print('The projection of the first vector onto the second vector.')
+
+    # Get the input for both vectors
+    x1 = float(input('Enter the x-coordinate of the first vector: '))
+    y1 = float(input('Enter the y-coordinate of the first vector: '))
+    x2 = float(input('Enter the x-coordinate of the second vector: '))
+    y2 = float(input('Enter the y-coordinate of the second vector: '))
+    
+    # Calculate the dot product of the two vectors
+    dot_product = x1 * x2 + y1 * y2
+    
+    # Calculate the length of the second vector
+    length_x2 = (x2 ** 2 + y2 ** 2) ** 0.5
+    
+    # Calculate the projection of the first vector onto the second vector
+    projection_x = (dot_product / (length_x2 ** 2)) * x2
+    projection_y = (dot_product / (length_x2 ** 2)) * y2
+    
+    print(f'The projection of the first vector onto the second vector is ({projection_x}, {projection_y})')
+
+main()
