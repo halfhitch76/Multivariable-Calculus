@@ -1,5 +1,10 @@
 #This program will calculate vector addition, subtraction, dot product, and 
-#projection of one vector onto another
+#projection of one vector onto another.
+#Added calculating the arc length of vector,
+
+import numpy as np
+from scipy.integrate import quad
+import sympy as sp
 
 def main():
     user_input = user_choice()
@@ -16,9 +21,13 @@ def main():
     elif user_input == 4:
         projection()
 
+    elif user_input == 5:
+        arc_length_calc()
+
+
 
 def user_choice():
-    user_input = int(input('Would you like to 1) Vector addition, 2) Vector subtraction, 3) Vector dot product, or 4) Vector projection? '))
+    user_input = int(input('Would you like to 1) Vector addition, 2) Vector subtraction, 3) Vector dot product, 4) Vector projection?, 5) Calculate Arc Length '))
 
     return user_input
     
@@ -72,5 +81,55 @@ def projection():
     projection_y = (dot_product / (length_x2 ** 2)) * y2
     
     print(f'The projection of the first vector onto the second vector is ({projection_x}, {projection_y})')
+
+
+def arc_length_calc():
+    def user_input_arc():
+        # Get user input for the parametric equation
+        x_input = sp.sympify(input("Enter the x(t) expression: "))
+        y_input = sp.sympify(input("Enter the y(t) expression: "))
+        z_input = sp.sympify(input("Enter the z(t) expression: "))
+
+        # Define the parameter and create a symbolic function for x(t) and y(t)
+        t = sp.symbols('t')
+        x = sp.lambdify(t, x_input, 'numpy')
+        y = sp.lambdify(t, y_input, 'numpy')
+        z = sp.lambdify(t, z_input, 'numpy')
+
+        return lambda t: np.array([x(t), y(t), z(t)])
+
+    def arc_length(parametric_equation, t_start, t_end, num_points=1000):
+        def integrate(t):
+            # Calculate the derivative of the parametric equation
+            dx_dt, dy_dt, dz_dt = np.gradient(parametric_equation(t), t)
+            return np.sqrt(dx_dt**2 + dy_dt**2 + dz_dt**2)
+
+        # Use numerical integration to calculate the arc length
+        result, _ = quad(integrate, t_start, t_end)
+
+        return result
+
+    # Get user input for the parametric equation
+    parametric_equation = user_input_arc()
+
+    # Get the interval for t
+    t_start = float(input("Enter the start value of t: "))
+    t_end = float(input("Enter the end value of t: "))
+
+    # Calculate the arc length of the parametric curve
+    arc_length_result = arc_length(parametric_equation, t_start, t_end)
+
+    print("\nArc Length of the Parametric Curve:", arc_length_result)
+
+
+
+
+def vector_derivative():
+    pass
+
+def vector_work():
+    pass
+
+
 
 main()
